@@ -1,0 +1,9 @@
+#ignore env file 
+.env
+
+#ignore node_modules and notusedcode folders
+node_modules/
+notusedcode/ 
+
+
+
