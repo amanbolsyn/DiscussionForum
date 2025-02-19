@@ -5,5 +5,8 @@
 node_modules/
 notusedcode/ 
 
+#ignore local logs files
+logs/logs.txt
+
 
 
