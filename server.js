@@ -39,7 +39,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
-    logger.info('Request processed', { caller: __filename, hostname: req.hostname, method: req.method, path: req.path, request_id: req.request_id, status: res.statusCode, user_agent: req.user_agent});
+    logger.info('Request processed', { caller: __filename, hostname: req.hostname, method: req.method, path: req.path, status: res.statusCode});
     //explicitly say middlware that we finished and it may go on
     next();
 });
@@ -50,8 +50,9 @@ app.use(AuthRoutes);
 //404 page
 app.use((req, res) => {
     res.status(404).render('404');
-    logger.info('Request processed', { caller: __filename, method: req.method, path: req.path, status: res.statusCode });
+    logger.info('Request processed', { caller: __filename, hostname: req.hostname, method: req.method, path: req.path, status: res.statusCode});
 });
+
 
 
 
