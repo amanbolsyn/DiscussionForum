@@ -5,8 +5,6 @@ const dotenv = require('dotenv');
 //load environment vars
 dotenv.config();
 
-const {LogToFile} = require('../logs/logger');
-
 
 
 //handle auth errors 
@@ -61,13 +59,11 @@ const CreateTokens = (id) => {
 };
 //auth controllers
 module.exports.signup_get = (req, res) => {
-    res.status(200).render('signup');
-    LogToFile('New request was made: ' + 'STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
+    res.render('signup');
 };
 
 module.exports.login_get = (req, res) => {
-    res.status(200).render('login');
-    LogToFile('New request was made: ' + 'STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
+    res.render('login');
 };
 
 module.exports.signup_post = async (req, res) => {
@@ -94,16 +90,12 @@ module.exports.signup_post = async (req, res) => {
         res.cookie('jwt', accessToken, { httpOnly: true, maxAge });
         res.cookie('refresh-token', refreshToken, { httpOnly: true, maxAge: maxAge });
         res.status(200).json({ user: user._id });
-        LogToFile('New request was made: ' + 'STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
-
 
 
     } catch (err) {  //throws an error if user wasn't saved successfully 
         console.log(err.message, err.code);
         const errors = HandleErrors(err);
         res.status(400).json({ errors });
-        LogToFile('New request was made: ' + ' Error occured: ' + err + ' STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method + ' FILEPATH: ' + __filename);
-
     }
 }
 
@@ -134,20 +126,16 @@ module.exports.login_post = async (req, res) => {
 
         // Return the refresh token in the response
         res.status(200).json({ user: user._id, refreshToken });
-        LogToFile('New request was made: ' + 'STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
 
     } catch (err) {
         const errors = HandleErrors(err);
         res.status(400).json({ errors });
-
-        LogToFile('New request was made: ' + ' Error occured: ' + err + ' STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method + ' FILEPATH: ' + __filename);
     }
 };
 
 module.exports.logout_get = async (req, res) => {
     res.cookie('jwt', '', { maxAge: 1 });
     res.cookie('refresh-token', '', { maxAge: 1 });
-    LogToFile('New request was made: ' + 'STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
     res.redirect('/');
 };
 

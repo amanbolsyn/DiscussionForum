@@ -1,17 +1,16 @@
-const fs = require('fs');
+const winston = require('winston');
 
-// Function to log messages into a file
-function LogToFile(message) {
-  const timestamp = new Date().toISOString();  // Adds a timestamp to each log entry
-  const logMessage = `[${timestamp}] ${message}`;
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.combine(
+      winston.format.timestamp(),
 
-  // Append the log message to the log file (log.txt in this case)
-  fs.appendFile('./logs/logs.txt', logMessage + '\n', (err) => {
-    console.log(logMessage)//also outputs every entrie into a console
-    if (err) {
-      console.error('Error writing to log file:', err);
-    }
+      winston.format.json()
+    ),
+    transports: [
+      new winston.transports.Console(),
+      new winston.transports.File({ filename: './logs/logs.json' })
+    ],
   });
-}
 
-module.exports = {LogToFile};
+module.exports = logger; 

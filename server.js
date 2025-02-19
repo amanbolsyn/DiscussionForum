@@ -6,7 +6,7 @@ const AuthRoutes = require('./routes/AuthRoutes');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 
-const { LogToFile } = require('./logs/logger');
+const logger = require('./logs/logger');
 
 //load environment vars
 dotenv.config();
@@ -23,10 +23,10 @@ mongoose.connect(dbURI)
     .then((result) => {
         app.listen(process.env.PORT)
         //logging 
-        LogToFile('Server is running at port ' + process.env.PORT);
-        LogToFile('Database is successfully connected')
+        logger.info('Server is running at port ' + process.env.PORT, { caller: __filename });
+        logger.info('Database is successfully connected', { caller: __filename });
     })
-    .catch((err) => LogToFile('Error occured: ' + err + ' FILEPATH: ' + __filename))
+    .catch((err) => logger.error('Error occured: ' + err, { filepath: __filename }))
 
 
 //register view engine 
@@ -37,22 +37,23 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+
+app.use((req, res, next) => {
+    logger.info('Request processed', { caller: __filename, hostname: req.hostname, method: req.method, path: req.path, request_id: req.request_id, status: res.statusCode, user_agent: req.user_agent});
+    //explicitly say middlware that we finished and it may go on
+    next();
+});
+
 app.use(PostRoutes);
 app.use(AuthRoutes);
 
 //404 page
 app.use((req, res) => {
     res.status(404).render('404');
-    LogToFile('New request was made: ' + 'STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
+    logger.info('Request processed', { caller: __filename, method: req.method, path: req.path, status: res.statusCode });
 });
 
 
-// //logging to console for every request 
-// app.use((req, res, next) => {
-//     console.log('New request made:', 'host: ', req.hostname, 'path: ', req.path, ' method: ', req.method);
-//     //explicitly say middlware that we finished and it may go on
-//     next();
-// });
 
 
 // app.put('/posts/:id', (req, res) => {

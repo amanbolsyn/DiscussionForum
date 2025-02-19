@@ -8,10 +8,10 @@ const requireAuth = (req, res, next) => {
     if (token) {
         jwt.verify(token,  process.env.KEY , (err, decodedToken) => {
             if (err) {
-                console.log(err.message);
+                //console.log(err.message);
                 res.redirect('/login');
             } else {
-                console.log(decodedToken);
+                //console.log(decodedToken);
                 next();
             }
         });
@@ -44,7 +44,7 @@ const checkUser = (req, res, next) => {
   // Function to check the refresh token (this will be reusable for all requests)
 const checkRefreshToken = async (req, res, next) => {
   const refreshToken = req.cookies['refresh-token']; // Accessing 'refresh-token' from cookies
-  console.log(refreshToken)
+  
   try {
     // Decode the refresh token to get the user ID
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_KEY);

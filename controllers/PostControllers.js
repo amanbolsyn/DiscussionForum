@@ -3,8 +3,6 @@ const User = require('../models/user');
 
 const jwt = require('jsonwebtoken');
 
-const {LogToFile} = require('../logs/logger');
-
 //twilio thrid package api to send sms to a phone number
 const twilio = require('twilio');
 const dotenv = require('dotenv');
@@ -17,9 +15,7 @@ const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TO
 
 //redirects to home page 
 module.exports.redirect_home = (req, res) => {
-    res.status(200).redirect('/posts');
-    LogToFile('New request was made: ' + 'STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
-
+    res.redirect('/posts');
 }
 
 //shows all posts on a home page
@@ -30,26 +26,24 @@ module.exports.posts_get = (req, res) => {
     //display all post on a main page
     Post.find()
         .then((result) => {
-            res.status(200).render('home', { posts: result });
-            LogToFile('New request was made: ' + 'STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
+            res.render('home', { posts: result });
         })
         .catch((err) => {
-            LogToFile('New request was made: ' + ' Error occured ' + err + ' STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
+            console.log(err)
         })
 
 }
 
 module.exports.post_get = (req, res) => {
     const id = req.params.id;
+    //console.log(id)
 
     Post.findById(id)
         .then((result) => {
-            res.status(200).render('post', { post: result, title: 'Post' })
-            LogToFile('New request was made: ' + 'STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
+            res.render('post', { post: result, title: 'Post' })
         })
         .catch((err) => {
-            LogToFile('New request was made: ' + ' Error occured ' + err + ' STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
-
+            console.log(err);
         })
 }
 
@@ -79,21 +73,17 @@ module.exports.post_post = async (req, res) => {
                 body: messageBody, // Message content
             })
                 .then((message) => {
-                    //console.log('SMS sent successfully:', message.sid);
+                    console.log('SMS sent successfully:', message.sid);
                     res.redirect('/posts'); // Redirect to posts list after sending SMS
-                    LogToFile('New request was made: ' + 'STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
-
                 })
                 .catch((err) => {
+                    console.error('Failed to send SMS:', err);
                     res.status(500).send('Error occurred while sending SMS.');
-                    LogToFile('New request was made: ' + ' Failed to send SMS: ' + err + ' STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
-
                 });
         })
         .catch((err) => {
-            LogToFile('New request was made: ' + ' Error occured: ' + err + ' STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
+            console.log('Error saving post:', err);
             res.status(500).send('Error occurred while saving the post.');
-
         });
 
 };
@@ -105,12 +95,10 @@ module.exports.posts_delete = (req, res) => {
     //deletes record by id and deletes it 
     Post.findByIdAndDelete(id)
         .then((result) => {
-            res.staus(200).json({ redirect: '/posts' })
-            LogToFile('New request was made: ' + 'STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
+            res.json({ redirect: '/posts' })
         })
         .catch((err) => {
-            LogToFile('New request was made: ' + ' Error occured: ' + err + ' STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
-
+            console.log(err)
         })
 };
 
@@ -120,26 +108,21 @@ module.exports.post_delete = (req, res) => {
     //deletes record by id and deletes it 
     Post.findByIdAndDelete(id)
         .then((result) => {
-            res.status(200).json({ redirect: '/posts' })
-            LogToFile('New request was made: ' + 'STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
+            res.json({ redirect: '/posts' })
         })
         .catch((err) => {
-            LogToFile('New request was made: ' + ' Error occured: ' + err + ' STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
-
+            console.log(err)
         })
 };
 
 //renders new posts page
 module.exports.newPosts_get = (req, res) => {
-    res.status(200).render('newPosts');
-    LogToFile('New request was made: ' + 'STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
-
+    res.render('newPosts');
 };
 
 //renders popular posts page
 module.exports.popularPosts_get = (req, res) => {
-    res.status(200).render('popularPosts');
-    LogToFile('New request was made: ' + 'STATUS CODE: ' + res.statusCode + ' HOST: ' + req.hostname + ' PATH: ' + req.path + ' METHOD: ' + req.method);
+    res.render('popularPosts');
 };
 
 
