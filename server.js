@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Post = require('./models/post');
-const routes = require('./routes/routes');
+const PostRoutes = require('./routes/PostRoutes');
+const AuthRoutes = require('./routes/AuthRoutes');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 
@@ -19,7 +20,8 @@ const dbURI = process.env.DB_URL;
 mongoose.connect(dbURI)
     .then((result) => {
         app.listen(process.env.PORT)
-        console.log("Server started")})
+        console.log("Server started")
+    })
     .catch((err) => console.log(err))
 
 
@@ -31,7 +33,9 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(routes);
+app.use(PostRoutes);
+app.use(AuthRoutes);
+
 
 
 //logging to console for every request 
