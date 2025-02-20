@@ -41,7 +41,7 @@ module.exports.posts_get = (req, res) => {
                 };
             });
 
-           // console.log(postsWithNicknames)
+            // console.log(postsWithNicknames)
 
             // Render the home page with posts and their author nickname
             res.status(200).render('home', { posts: postsWithNicknames, title: 'Discussion forum' });
@@ -136,8 +136,42 @@ module.exports.post_delete = (req, res) => {
 };
 
 //renders new posts page
-module.exports.newPosts_get = (req, res) => {
-    res.status(200).render('newPosts', { title: 'Recent posts' });
+module.exports.newPosts_get = async (req, res) => {
+
+        // Fetch posts from the database, sorted by timestamp in descending order (most recent first)
+        //const posts = await Post.find().sort({ date: -1 }); // or .sort({ createdAt: -1 })
+        // Get all posts
+  Post.find().sort({date: -1})
+    .then(async (posts) => {
+        // Get all users with their _id and nickname
+        const users = await User.find().select('nickname _id');
+
+        // Create a mapping from user ID to nickname
+        const userMap = new Map();
+        users.forEach(user => {
+            userMap.set(user._id.toString(), user.nickname); // Convert _id to string for easier matching
+        });
+
+        // Attach nickname to each post
+        const postsWithNicknames = posts.map(post => {
+            // Assuming post.author is the user ID
+            const authorNickname = userMap.get(post.author.toString());
+            return {
+                ...post.toObject(), // Convert Mongoose document to plain object
+                authorNickname: authorNickname // Attach nickname
+            };
+        });
+
+
+        //console.log(posts);
+        // Render the 'newPosts' page with the posts and title
+        res.status(200).render('newPosts', { posts: postsWithNicknames, title: 'Recent posts'})
+    })
+    .catch ((error) =>{
+        // Handle error (e.g., if there is a database issue)
+        console.error('Error fetching posts:', error);
+        res.status(500).send('Server Error');
+    });
 };
 
 //renders popular posts page
