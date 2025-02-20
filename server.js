@@ -54,9 +54,6 @@ app.use((req, res) => {
 });
 
 
-
-
-
 // app.put('/posts/:id', (req, res) => {
 //     const id = req.params.id; // Get the post ID from the URL
 //     const { title, body } = req.body; // Get updated title and body from the request body

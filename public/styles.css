@@ -1,9 +1,12 @@
 /* General Styling */
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
-    height: 100%; /* Ensure full viewport height */
-    width: 100%;  /* Ensure full viewport width */
+    height: 100%;
+    /* Ensure full viewport height */
+    width: 100%;
+    /* Ensure full viewport width */
 }
 
 body {
@@ -15,17 +18,22 @@ body {
 
 /* Container Styling */
 .container {
-    width: 80%;  /* Set the website width to 80% of the screen */
-    margin: 0 auto; /* Center the container */
-    flex-grow: 1;  /* Allow the content to grow and push footer to the bottom */
+    width: 80%;
+    /* Set the website width to 80% of the screen */
+    margin: 0 auto;
+    /* Center the container */
+    flex-grow: 1;
+    /* Allow the content to grow and push footer to the bottom */
 }
 
 /* Header Styling */
 header {
     background-color: #333;
     color: rgb(9, 4, 4);
-    padding: 8px 0; /* Adjusted padding */
-    min-height: 30px; /* Adjusted minimum height */
+    padding: 8px 0;
+    /* Adjusted padding */
+    min-height: 30px;
+    /* Adjusted minimum height */
 }
 
 nav {
@@ -56,19 +64,27 @@ nav .right-nav li {
 
 /* Navbar Styling */
 nav ul li a {
-    color: white;  /* Set default text color */
-    text-decoration: none;  /* Remove underline from links */
+    color: white;
+    /* Set default text color */
+    text-decoration: none;
+    /* Remove underline from links */
     font-size: 16px;
-    padding: 10px 15px;  /* Add padding to make the hover area larger */
-    display: inline-block;  /* Ensure the padding works properly */
-    transition: background-color 0.3s ease, color 0.3s ease;  /* Smooth transition for background and text color */
+    padding: 10px 15px;
+    /* Add padding to make the hover area larger */
+    display: inline-block;
+    /* Ensure the padding works properly */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    /* Smooth transition for background and text color */
 }
 
 /* Navbar Link Hover Effect */
 nav ul li a:hover {
-    background-color: #444;  /* Lighter gray background color on hover */
-    color: #ddd;  /* Lighter text color when hovered */
-    border-radius: 5px;  /* Optional: Add rounded corners on hover */
+    background-color: #444;
+    /* Lighter gray background color on hover */
+    color: #ddd;
+    /* Lighter text color when hovered */
+    border-radius: 5px;
+    /* Optional: Add rounded corners on hover */
 }
 
 /* Main Content Styling */
@@ -81,6 +97,45 @@ h2 {
     margin-bottom: 20px;
 }
 
+.post-form {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+  /* Modal Content Styling */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    position: relative; /* Make it a positioned container for the close button */
+}
+
+/* Close Button Styling */
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;  /* Position the close button on the top-right of the modal */
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
 .post-form form {
     background-color: white;
     padding: 20px;
@@ -88,7 +143,8 @@ h2 {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.post-form input, .post-form textarea {
+.post-form input,
+.post-form textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -99,19 +155,29 @@ h2 {
 
 /* General Styling for the Button */
 .post-form button {
-    width: 100%;  /* Make the button take up the full width of the container */
-    padding: 15px;  /* Increase padding for better spacing */
-    border: none;  /* Remove the default border */
-    background-color: #007bff;  /* Set background color */
-    color: white;  /* Set text color */
-    font-size: 16px;  /* Set font size */
-    cursor: pointer;  /* Pointer cursor on hover */
-    border-radius: 10px;  /* Rounded edges for the button */
-    transition: background-color 0.3s ease;  /* Smooth transition for hover effect */
+    width: 100%;
+    /* Make the button take up the full width of the container */
+    padding: 15px;
+    /* Increase padding for better spacing */
+    border: none;
+    /* Remove the default border */
+    background-color: #007bff;
+    /* Set background color */
+    color: white;
+    /* Set text color */
+    font-size: 16px;
+    /* Set font size */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    border-radius: 10px;
+    /* Rounded edges for the button */
+    transition: background-color 0.3s ease;
+    /* Smooth transition for hover effect */
 }
 
 .post-form button:hover {
-    background-color: #0056b3;  /* Darker blue on hover */
+    background-color: #0056b3;
+    /* Darker blue on hover */
 }
 
 
@@ -130,6 +196,7 @@ h2 {
 .post-list p {
     font-size: 16px;
 }
+
 /* Post Styling */
 .post {
     background-color: white;
@@ -137,8 +204,10 @@ h2 {
     margin-bottom: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    position: relative; /* Position relative for positioning the menu */
+    position: relative;
+    /* Position relative for positioning the menu */
 }
+
 /* Three-Dot Menu Styling */
 .post-options {
     background: none;
@@ -149,39 +218,6 @@ h2 {
     position: absolute;
     top: 15px;
     right: 15px;
-}
-
-/* Post Options Menu Styling */
-.post-options-menu {
-    display: none;
-    position: absolute;
-    top: 35px;
-    right: 15px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 10; /* Ensure the menu is above other content */
-}
-
-.post-options-menu button {
-    background: none;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: #333;
-    cursor: pointer;
-    width: 100%;
-    text-align: left;
-}
-
-/* Show Menu */
-.post-options-menu.show {
-    display: block;
-}
-
-.post-options-menu button:hover {
-    background-color: #f0f0f0;
 }
 
 /* Author Styling */
@@ -195,15 +231,16 @@ h2 {
     color: #555;
 }
 
-
 /* Login Form Styling */
 .form-section {
     background-color: white;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px; /* Restrict width of the form */
-    margin: 50px auto; /* Center the form horizontally and add top margin */
+    max-width: 400px;
+    /* Restrict width of the form */
+    margin: 50px auto;
+    /* Center the form horizontally and add top margin */
 }
 
 .form-section h2 {
@@ -212,29 +249,37 @@ h2 {
     text-align: center;
 }
 
-.login-form label , .signup-form label {
+.login-form label,
+.signup-form label {
     font-size: 16px;
     color: #333;
     display: block;
     margin-bottom: 5px;
 }
 
-.login-form input , .signup-form input {
-    width: 100%; /* Make the inputs take the full width */
+.login-form input,
+.signup-form input {
+    width: 100%;
+    /* Make the inputs take the full width */
     padding: 12px;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
     background-color: #f9f9f9;
-    transition: border-color 0.3s ease; /* Smooth transition for border color */
+    transition: border-color 0.3s ease;
+    /* Smooth transition for border color */
 }
 
-.login-form input:focus , .signup-form input:focus{
-    border-color: #007bff; /* Change border color on focus */
-    outline: none; /* Remove default focus outline */
+.login-form input:focus,
+.signup-form input:focus {
+    border-color: #007bff;
+    /* Change border color on focus */
+    outline: none;
+    /* Remove default focus outline */
 }
 
-.login-form button, .signup-form button {
+.login-form button,
+.signup-form button {
     width: 100%;
     padding: 15px;
     border: none;
@@ -244,14 +289,17 @@ h2 {
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-    font-weight: bold; /* Bold the button text */
+    font-weight: bold;
+    /* Bold the button text */
 }
 
-.login-form button:hover, .signup-form button:hover {
+.login-form button:hover,
+.signup-form button:hover {
     background-color: #0056b3;
 }
 
-.login-form a, .signup-form a {
+.login-form a,
+.signup-form a {
     display: block;
     text-align: center;
     margin-top: 10px;
@@ -260,17 +308,17 @@ h2 {
     font-size: 14px;
 }
 
-.login-form a:hover, .signup-form a:hover  {
+.login-form a:hover,
+.signup-form a:hover {
     text-decoration: underline;
 }
 
-.error{
+.error {
     color: #ff0099;
     margin: 10px 2px;
     font-size: 0.8em;
     font-weight: bold;
-  }
-
+}
 
 /* Footer Styling */
 footer {
@@ -278,5 +326,6 @@ footer {
     color: white;
     padding: 15px 0;
     text-align: center;
-    margin-top: auto; /* Ensure footer stays at the bottom */
+    margin-top: auto;
+    /* Ensure footer stays at the bottom */
 }

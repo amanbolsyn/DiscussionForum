@@ -4,23 +4,23 @@
 <%- include("./partials/head.ejs") %>
 
     <body>
-
         <!-- Header Section -->
         <%- include("./partials/header.ejs") %>
 
             <!-- Main Content -->
             <main>
                 <div class="container">
-                    <section class="post-list">
-                        <h2>Trending Posts</h2>
-                        <div id="postsContainer"></div>
-                    </section>
+                    <!-- Create Post Form -->
+                    <%- include('partials/createPostForm.ejs') %>
+
+                        <section class="post-list">
+                            <h2>Trending Posts</h2>
+                            <div id="postsContainer"></div>
+                        </section>
                 </div>
             </main>
-
             <!-- Footer Section -->
             <%- include("./partials/footer.ejs") %>
-
     </body>
 
 </html>

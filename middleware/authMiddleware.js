@@ -49,7 +49,7 @@ const checkRefreshToken = async (req, res, next) => {
     // Decode the refresh token to get the user ID
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_KEY);
     const userId = decoded.id;
-
+ 
     // Find the user in the database
     const user = await User.findById(userId);
 

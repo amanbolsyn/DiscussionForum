@@ -7,10 +7,14 @@
                 <li><a href="/popular">Popular</a></li>
             </ul>
             <ul class="right-nav">
-                <li><a id="createPost">Create post</a></li>
-                <li><a href="/logout">Log out</a></li>
-                <li><a href="/login">Log in</a></li>
-                <li><a href="/signup">Sign up</a></li>
+                <% if(user) { %>
+                    <li><a id="createPost">Create post</a></li>
+                    <li><a>Profile</a></li>
+                    <li><a href="/logout">Log out</a></li>
+                    <% } else { %>
+                        <li><a href="/login">Log in</a></li>
+                        <li><a href="/signup">Sign up</a></li>
+                        <% } %>
             </ul>
         </nav>
     </div>

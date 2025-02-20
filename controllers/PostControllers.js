@@ -58,7 +58,6 @@ module.exports.post_post = async (req, res) => {
 
     // Find the user in the database
     const user = await User.findById(id);
-    console.log(user);
     post.author = id
 
     post.save()
