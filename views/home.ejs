@@ -22,13 +22,8 @@
                 <% if (posts.length>= 0) { %>
                   <% posts.forEach(posts=> { %>
                     <a style="text-decoration:none;" href="/post/<%= posts._id %>">
-                      <h3>
-                        <%= posts.title %>
-                      </h3>
-                    </a>
-                    <p>
-                      <%= posts.body %>
-                    </p>
+                      <h3><%= posts.title %></h3>
+                    </a><p><%= posts.body %> </p>
                     <p>
                       <a>Categories</a>
                       <%= posts.categories %><br>
@@ -41,11 +36,10 @@
                     <button id="delete" data-id=<%=posts._id %> >Delete</button>
                     <hr>
 
-                    <% }) %>
-                      <% } else { %>
-                        <p>There are no blogs to display...</p>
-                        <% } %>
-
+                   <% }) %>
+                 <% } else { %>
+                    <p>There are no blogs to display...</p>
+                 <% } %>
               </div>
         </div>
         </section>

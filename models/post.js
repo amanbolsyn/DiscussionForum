@@ -16,7 +16,8 @@ const postSchema = new mongoose.Schema({
     default: Date.now, // Use the current date if no date is provided
   },
   categories: {
-    type: [String], // Array of categories (e.g., ['Climate', 'Environment'])
+    type: String, //one category per post
+    // Array of categories (e.g., ['Climate', 'Environment']) fo future
     required: true,
   },
   likes: {

@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 //export post and auth routes
 const PostRoutes = require('./routes/PostRoutes');
 const AuthRoutes = require('./routes/AuthRoutes');
+const ProfileRoutes = require('./routes/ProfileRoutes');
+
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 
@@ -46,6 +48,7 @@ app.use((req, res, next) => {
 
 app.use(PostRoutes);
 app.use(AuthRoutes);
+app.use(ProfileRoutes);
 
 //404 page
 app.use((req, res) => {

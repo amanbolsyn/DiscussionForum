@@ -20,8 +20,6 @@ module.exports.redirect_home = (req, res) => {
 
 //shows all posts on a home page
 module.exports.posts_get = (req, res) => {
-    //automatically infers content type
-    //automatically infers status code
 
     //display all post on a main page
     Post.find()
@@ -51,6 +49,8 @@ module.exports.post_get = (req, res) => {
 module.exports.post_post = async (req, res) => {
     const post = new Post(req.body);
 
+    console.log(post);
+
     const accessToken = req.cookies['jwt']; // Accessing 'jwt' from cookies
     // Decode the refresh token to get the user ID
     const decoded = jwt.verify(accessToken, process.env.KEY);
@@ -58,7 +58,7 @@ module.exports.post_post = async (req, res) => {
 
     // Find the user in the database
     const user = await User.findById(id);
-    post.author = id
+    post.author = user.id
 
     post.save()
         .then((result) => {

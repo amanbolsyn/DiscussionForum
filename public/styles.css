@@ -109,14 +109,17 @@ h2 {
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-  /* Modal Content Styling */
-  .modal-content {
+/* Modal Content Styling */
+.modal-content {
     background-color: #fefefe;
     margin: 15% auto;
-    padding: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
     border: 1px solid #888;
-    width: 80%;
-    position: relative; /* Make it a positioned container for the close button */
+    width: 70%;
+    position: relative;
+    border-radius: 5px;
+    /* Make it a positioned container for the close button */
 }
 
 /* Close Button Styling */
@@ -126,7 +129,8 @@ h2 {
     font-weight: bold;
     position: absolute;
     top: 10px;
-    right: 10px;  /* Position the close button on the top-right of the modal */
+    right: 10px;
+    /* Position the close button on the top-right of the modal */
 }
 
 .close:hover,
@@ -138,9 +142,8 @@ h2 {
 
 .post-form form {
     background-color: white;
-    padding: 20px;
+    padding:10px;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .post-form input,
