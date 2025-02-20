@@ -19,33 +19,33 @@
             <section class="post-list">
               <h2>All Posts</h2>
               <div id="postsContainer">
-                <% if (posts.length>= 0) { %>
-                    <% posts.forEach(posts=> { %>
-                      <a style="text-decoration:none;" href="/post/<%= posts._id %>">
-                        <h3>
-                          <%= posts.title %>
-                        </h3>
-                      </a>
-                      <p>
-                        <%= posts.body %>
-                      </p>
-                      <p>
-                        <a>Categories</a>
-                        <%= posts.categories %><br>
-                          <a>Likes</a>
-                          <%= posts.likes%><br>
-                            <a href="/profile/<%=posts.author %>">
-                              <%= posts.authorNickname %>
-                            </a>
-                      </p>
-                      <!-- <button id="edit" data-id=<%=posts._id %> >Edit</button>
+                <% if (posts.length> 0) { %>
+                  <% posts.forEach(posts=> { %>
+                    <a style="text-decoration:none;" href="/post/<%= posts._id %>">
+                      <h3>
+                        <%= posts.title %>
+                      </h3>
+                    </a>
+                    <p>
+                      <%= posts.body %>
+                    </p>
+                    <p>
+                      <a>Categories</a>
+                      <%= posts.categories %><br>
+                        <a>Likes</a>
+                        <%= posts.likes%><br>
+                          <a href="/profile/<%=posts.author %>">
+                            <%= posts.authorNickname %>
+                          </a>
+                    </p>
+                    <!-- <button id="edit" data-id=<%=posts._id %> >Edit</button>
                       <button id="delete" data-id=<%=posts._id %> >Delete</button> -->
-                      <hr>
+                    <hr>
 
-                      <% }) %>
-                        <% } else { %>
-                          <p>There are no blogs to display...</p>
-                          <% } %>
+                    <% }) %>
+                      <% } else { %>
+                        <p>There are no blogs to display...</p>
+                        <% } %>
               </div>
         </div>
         </section>

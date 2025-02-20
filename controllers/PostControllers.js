@@ -123,13 +123,13 @@ module.exports.post_post = async (req, res) => {
     post.author = user.id
 
     post.save()
-        .then((result) => { 
+        .then((result) => {
             res.status(200).redirect('/posts');
         })
-        .catch ((err) => {
-        console.log('Error saving post:', err);
-        res.status(500).send('Error occurred while saving the post.');
-    });
+        .catch((err) => {
+            console.log('Error saving post:', err);
+            res.status(500).send('Error occurred while saving the post.');
+        });
 
 }
 
@@ -198,38 +198,73 @@ module.exports.newPosts_get = async (req, res) => {
 
 //renders popular posts page
 module.exports.popularPosts_get = (req, res) => {
-    
- Post.find().sort({ likes: -1 })
-    .then(async (posts) => {
-        // Get all users with their _id and nickname
-        const users = await User.find().select('nickname _id');
 
-        // Create a mapping from user ID to nickname
-        const userMap = new Map();
-        users.forEach(user => {
-            userMap.set(user._id.toString(), user.nickname); // Convert _id to string for easier matching
+    Post.find().sort({ likes: -1 })
+        .then(async (posts) => {
+            // Get all users with their _id and nickname
+            const users = await User.find().select('nickname _id');
+
+            // Create a mapping from user ID to nickname
+            const userMap = new Map();
+            users.forEach(user => {
+                userMap.set(user._id.toString(), user.nickname); // Convert _id to string for easier matching
+            });
+
+            // Attach nickname to each post
+            const postsWithNicknames = posts.map(post => {
+                // Assuming post.author is the user ID
+                const authorNickname = userMap.get(post.author.toString());
+                return {
+                    ...post.toObject(), // Convert Mongoose document to plain object
+                    authorNickname: authorNickname // Attach nickname
+                };
+            });
+
+
+            //console.log(posts);
+            // Render the 'newPosts' page with the posts and title
+            res.status(200).render('popularPosts', { posts: postsWithNicknames, title: 'Popular posts' })
+        })
+        .catch((error) => {
+            // Handle error (e.g., if there is a database issue)
+            console.error('Error fetching posts:', error);
+            res.status(500).send('Server Error');
+        });
+};
+
+module.exports.categoryPosts_get = (req, res) => {
+
+    const categoryName = req.params.category; // Get category from the URL
+
+    // Find posts that belong to this category
+    Post.find({ categories: categoryName })
+        .then(async (posts) => {
+            // Get all users with their _id and nickname
+            const users = await User.find().select('nickname _id');
+
+            // Create a mapping from user ID to nickname
+            const userMap = new Map();
+            users.forEach(user => {
+                userMap.set(user._id.toString(), user.nickname); // Convert _id to string for easier matching
+            });
+
+            // Attach nickname to each post
+            const postsWithNicknames = posts.map(post => {
+                // Assuming post.author is the user ID
+                const authorNickname = userMap.get(post.author.toString());
+                return {
+                    ...post.toObject(), // Convert Mongoose document to plain object
+                    authorNickname: authorNickname // Attach nickname
+                };
+            });
+
+            res.status(200).render('categoryPosts', { posts: postsWithNicknames, title: categoryName + ' posts' });
+        })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).send('Error fetching posts for this category');
         });
 
-        // Attach nickname to each post
-        const postsWithNicknames = posts.map(post => {
-            // Assuming post.author is the user ID
-            const authorNickname = userMap.get(post.author.toString());
-            return {
-                ...post.toObject(), // Convert Mongoose document to plain object
-                authorNickname: authorNickname // Attach nickname
-            };
-        });
-
-
-        //console.log(posts);
-        // Render the 'newPosts' page with the posts and title
-        res.status(200).render('popularPosts', { posts: postsWithNicknames, title: 'Popular posts' })
-    })
-    .catch((error) => {
-        // Handle error (e.g., if there is a database issue)
-        console.error('Error fetching posts:', error);
-        res.status(500).send('Server Error');
-    });
 };
 
 

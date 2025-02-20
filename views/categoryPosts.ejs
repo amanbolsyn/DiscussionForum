@@ -16,7 +16,9 @@
                     <%- include('partials/createPostForm.ejs') %>
 
                         <section class="post-list">
-                            <h2>Popular Posts</h2>
+                            <h2>
+                                <%= title %>
+                            </h2>
                             <div id="postsContainer">
                                 <% if (posts.length > 0) { %>
                                     <% posts.forEach(posts=> { %>
@@ -33,7 +35,7 @@
                                             <%= posts.categories %><br>
                                                 <a>Likes</a>
                                                 <%= posts.likes%><br>
-                                                    <a href="/profile/<%=posts.author %>">
+                                                    <a href="/profile/<%= posts.author %>">
                                                         <%= posts.authorNickname %>
                                                     </a>
                                         </p>
