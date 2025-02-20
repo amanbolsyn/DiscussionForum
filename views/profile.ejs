@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!--Head Section-->
-    <%- include("./partials/head.ejs") %>
-<body>
+<!--Head Section-->
+<%- include("./partials/head.ejs") %>
 
-    <!-- Header Section -->
-    <%- include("./partials/header.ejs") %>
+    <body>
 
-    <!-- Main Content -->
-    <main>
-        <div class="container">
+        <!-- Header Section -->
+        <%- include("./partials/header.ejs") %>
 
-            <!-- Create Post Form -->
-            <%- include('partials/createPostForm.ejs') %>
+            <!-- Main Content -->
+            <main>
+                <div class="container">
 
-            <section class="post-list">
-                <h2>Profile</h2>
-                <div id="postsContainer"></div>
-            </section>
-        </div>
-    </main>
+                    <!-- Create Post Form -->
+                    <%- include('partials/createPostForm.ejs') %>
+                        <h2>Profile</h2>
+                        <h3><%=user.nickname %></h3>
 
-    <!-- Footer Section -->
-    <%- include("./partials/footer.ejs") %>
-</body>
+                        <section class="post-list">
+                            <div id="postsContainer"></div>
+                        </section>
+                </div>
+            </main>
+
+            <!-- Footer Section -->
+            <%- include("./partials/footer.ejs") %>
+    </body>
+
 </html>

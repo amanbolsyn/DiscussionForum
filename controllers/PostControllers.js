@@ -18,27 +18,48 @@ module.exports.redirect_home = (req, res) => {
     res.status(200).redirect('/posts');
 }
 
-//shows all posts on a home page
 module.exports.posts_get = (req, res) => {
-
-    //display all post on a main page
+    // Get all posts
     Post.find()
-        .then((result) => {
-            res.status(200).render('home', { posts: result });
+        .then(async (posts) => {
+            // Get all users with their _id and nickname
+            const users = await User.find().select('nickname _id');
+
+            // Create a mapping from user ID to nickname
+            const userMap = new Map();
+            users.forEach(user => {
+                userMap.set(user._id.toString(), user.nickname); // Convert _id to string for easier matching
+            });
+
+            // Attach nickname to each post
+            const postsWithNicknames = posts.map(post => {
+                // Assuming post.author is the user ID
+                const authorNickname = userMap.get(post.author.toString());
+                return {
+                    ...post.toObject(), // Convert Mongoose document to plain object
+                    authorNickname: authorNickname // Attach nickname
+                };
+            });
+
+           // console.log(postsWithNicknames)
+
+            // Render the home page with posts and their author nickname
+            res.status(200).render('home', { posts: postsWithNicknames, title: 'Discussion forum' });
         })
         .catch((err) => {
-            console.log(err)
-        })
-
+            console.log(err);
+        });
 }
+
 
 module.exports.post_get = (req, res) => {
     const id = req.params.id;
     //console.log(id)
 
     Post.findById(id)
-        .then((result) => {
-            res.status(200).render('post', { post: result, title: 'Post' })
+        .then(async (result) => {
+            const user = await User.findById(result.author);
+            res.status(200).render('post', { post: result, title: result.title, author: user.nickname, user_id: user._id })
         })
         .catch((err) => {
             console.log(err);
@@ -116,12 +137,12 @@ module.exports.post_delete = (req, res) => {
 
 //renders new posts page
 module.exports.newPosts_get = (req, res) => {
-    res.status(200).render('newPosts');
+    res.status(200).render('newPosts', { title: 'Recent posts' });
 };
 
 //renders popular posts page
 module.exports.popularPosts_get = (req, res) => {
-    res.status(200).render('popularPosts');
+    res.status(200).render('popularPosts', { title: 'Popular posts' });
 };
 
 

@@ -19,7 +19,9 @@
                             <p>
                                 <%= post.body%>
                             </p>
-                            <a href="#">Aman Bolsyn</a><br><br>
+                            <a href="/profile/<%= user_id %>">
+                                <%= author %>
+                            </a><br><br>
                             <button>Edit</button>
                             <button id="delete" data-doc=<%=post._id%>>Delete</button>
                         </div>

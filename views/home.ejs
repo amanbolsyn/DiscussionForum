@@ -20,26 +20,32 @@
               <h2>All Posts</h2>
               <div id="postsContainer">
                 <% if (posts.length>= 0) { %>
-                  <% posts.forEach(posts=> { %>
-                    <a style="text-decoration:none;" href="/post/<%= posts._id %>">
-                      <h3><%= posts.title %></h3>
-                    </a><p><%= posts.body %> </p>
-                    <p>
-                      <a>Categories</a>
-                      <%= posts.categories %><br>
-                        <a>Likes</a>
-                        <%= posts.likes%><br>
-                          <a>Author</a>
-                          <%= posts.author%>
-                    </p>
-                    <button id="edit" data-id=<%=posts._id %> >Edit</button>
-                    <button id="delete" data-id=<%=posts._id %> >Delete</button>
-                    <hr>
+                    <% posts.forEach(posts=> { %>
+                      <a style="text-decoration:none;" href="/post/<%= posts._id %>">
+                        <h3>
+                          <%= posts.title %>
+                        </h3>
+                      </a>
+                      <p>
+                        <%= posts.body %>
+                      </p>
+                      <p>
+                        <a>Categories</a>
+                        <%= posts.categories %><br>
+                          <a>Likes</a>
+                          <%= posts.likes%><br>
+                            <a href="/profile/<%=posts.author %>">
+                              <%= posts.authorNickname %>
+                            </a>
+                      </p>
+                      <button id="edit" data-id=<%=posts._id %> >Edit</button>
+                      <button id="delete" data-id=<%=posts._id %> >Delete</button>
+                      <hr>
 
-                   <% }) %>
-                 <% } else { %>
-                    <p>There are no blogs to display...</p>
-                 <% } %>
+                      <% }) %>
+                        <% } else { %>
+                          <p>There are no blogs to display...</p>
+                          <% } %>
               </div>
         </div>
         </section>
@@ -50,38 +56,21 @@
       <%- include("./partials/footer.ejs") %>
 
         <script>
-          const deleteBttn = document.getElementById("delete");
+          // const deleteBttn = document.getElementById("delete");
 
-          deleteBttn.addEventListener('click', (e) => {
-            const endpoint = `/posts/${deleteBttn.dataset.id}`;
+          // deleteBttn.addEventListener('click', (e) => {
+          //   const endpoint = `/posts/${deleteBttn.dataset.id}`;
 
-            fetch(endpoint, {
-              method: 'DELETE',
-            })
-              .then(response => response.json())
-              .then((data) => {
-                alert("Post was successfully deleted");
-                window.location.href = data.redirect
-              })
-              .catch((err) => { console.log(err) })
-          });
-
-          const editBttn = document.getElementById("edit");
-
-          editBttn.addEventListener('click', (e) => {
-            const endpoint = `/posts/${editBttn.dataset.id}`
-
-            fetch(endpoint, {
-              method: 'GET',
-            })
-              .then(response => response.json())
-              .then((data) => {
-                document.getElementById("editpostTitle").value = data.result.title;
-                document.getElementById("editpostContent").value = data.result.body;
-              })
-              .catch((err) => { console.log(err) })
-          })
-
+          //   fetch(endpoint, {
+          //     method: 'DELETE',
+          //   })
+          //     .then(response => response.json())
+          //     .then((data) => {
+          //       alert("Post was successfully deleted");
+          //       window.location.href = data.redirect
+          //     })
+          //     .catch((err) => { console.log(err) })
+          // });
         </script>
   </body>
 
