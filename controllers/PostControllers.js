@@ -67,10 +67,51 @@ module.exports.post_get = (req, res) => {
 }
 
 
-module.exports.post_post = async (req, res) => {
-    const post = new Post(req.body);
+// module.exports.post_post = async (req, res) => {
+//     const post = new Post(req.body);
 
-    console.log(post);
+//     // console.log(post);
+
+//     const accessToken = req.cookies['jwt']; // Accessing 'jwt' from cookies
+//     // Decode the refresh token to get the user ID
+//     const decoded = jwt.verify(accessToken, process.env.KEY);
+//     const id = decoded.id;
+
+//     // Find the user in the database
+//     const user = await User.findById(id);
+//     post.author = user.id
+
+//     post.save()
+//         .then((result) => {
+//             // Send SMS after saving the post
+//             const messageBody = `A new post has been created: ${result.title}`;
+//             const recipientPhoneNumber = "+77021345823"; // Phone number to receive the SMS (can be admin or user)
+
+//             client.messages.create({
+//                 to: recipientPhoneNumber, // Recipient's phone number
+//                 from: process.env.TWILIO_PHONE_NUMBER, // Your Twilio phone number
+//                 body: messageBody, // Message content
+//             })
+//                 .then((message) => {
+//                     console.log('SMS sent successfully:', message.sid);
+//                     res.status(200).redirect('/posts'); // Redirect to posts list after sending SMS
+//                 })
+//                 .catch((err) => {
+//                     console.error('Failed to send SMS:', err);
+//                     res.status(500).send('Error occurred while sending SMS.');
+//                 });
+//         })
+//         .catch((err) => {
+//             console.log('Error saving post:', err);
+//             res.status(500).send('Error occurred while saving the post.');
+//         });
+
+// };
+
+
+module.exports.post_post = async (req, res) => {
+
+    const post = new Post(req.body);
 
     const accessToken = req.cookies['jwt']; // Accessing 'jwt' from cookies
     // Decode the refresh token to get the user ID
@@ -82,32 +123,15 @@ module.exports.post_post = async (req, res) => {
     post.author = user.id
 
     post.save()
-        .then((result) => {
-            // Send SMS after saving the post
-            const messageBody = `A new post has been created: ${result.title}`;
-            const recipientPhoneNumber = "+77021345823"; // Phone number to receive the SMS (can be admin or user)
-
-            client.messages.create({
-                to: recipientPhoneNumber, // Recipient's phone number
-                from: process.env.TWILIO_PHONE_NUMBER, // Your Twilio phone number
-                body: messageBody, // Message content
-            })
-                .then((message) => {
-                    console.log('SMS sent successfully:', message.sid);
-                    res.status(200).redirect('/posts'); // Redirect to posts list after sending SMS
-                })
-                .catch((err) => {
-                    console.error('Failed to send SMS:', err);
-                    res.status(500).send('Error occurred while sending SMS.');
-                });
+        .then((result) => { 
+            res.status(200).redirect('/posts');
         })
-        .catch((err) => {
-            console.log('Error saving post:', err);
-            res.status(500).send('Error occurred while saving the post.');
-        });
+        .catch ((err) => {
+        console.log('Error saving post:', err);
+        res.status(500).send('Error occurred while saving the post.');
+    });
 
-};
-
+}
 
 module.exports.posts_delete = (req, res) => {
     const id = req.params.id;
@@ -138,10 +162,44 @@ module.exports.post_delete = (req, res) => {
 //renders new posts page
 module.exports.newPosts_get = async (req, res) => {
 
-        // Fetch posts from the database, sorted by timestamp in descending order (most recent first)
-        //const posts = await Post.find().sort({ date: -1 }); // or .sort({ createdAt: -1 })
-        // Get all posts
-  Post.find().sort({date: -1})
+    // Get all posts
+    Post.find().sort({ date: -1 })
+        .then(async (posts) => {
+            // Get all users with their _id and nickname
+            const users = await User.find().select('nickname _id');
+
+            // Create a mapping from user ID to nickname
+            const userMap = new Map();
+            users.forEach(user => {
+                userMap.set(user._id.toString(), user.nickname); // Convert _id to string for easier matching
+            });
+
+            // Attach nickname to each post
+            const postsWithNicknames = posts.map(post => {
+                // Assuming post.author is the user ID
+                const authorNickname = userMap.get(post.author.toString());
+                return {
+                    ...post.toObject(), // Convert Mongoose document to plain object
+                    authorNickname: authorNickname // Attach nickname
+                };
+            });
+
+
+            //console.log(posts);
+            // Render the 'newPosts' page with the posts and title
+            res.status(200).render('newPosts', { posts: postsWithNicknames, title: 'Recent posts' })
+        })
+        .catch((error) => {
+            // Handle error (e.g., if there is a database issue)
+            console.error('Error fetching posts:', error);
+            res.status(500).send('Server Error');
+        });
+};
+
+//renders popular posts page
+module.exports.popularPosts_get = (req, res) => {
+    
+ Post.find().sort({ likes: -1 })
     .then(async (posts) => {
         // Get all users with their _id and nickname
         const users = await User.find().select('nickname _id');
@@ -165,18 +223,13 @@ module.exports.newPosts_get = async (req, res) => {
 
         //console.log(posts);
         // Render the 'newPosts' page with the posts and title
-        res.status(200).render('newPosts', { posts: postsWithNicknames, title: 'Recent posts'})
+        res.status(200).render('popularPosts', { posts: postsWithNicknames, title: 'Popular posts' })
     })
-    .catch ((error) =>{
+    .catch((error) => {
         // Handle error (e.g., if there is a database issue)
         console.error('Error fetching posts:', error);
         res.status(500).send('Server Error');
     });
-};
-
-//renders popular posts page
-module.exports.popularPosts_get = (req, res) => {
-    res.status(200).render('popularPosts', { title: 'Popular posts' });
 };
 
 

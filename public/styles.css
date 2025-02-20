@@ -77,14 +77,54 @@ nav ul li a {
     /* Smooth transition for background and text color */
 }
 
+
+
 /* Navbar Link Hover Effect */
-nav ul li a:hover {
+nav ul li a :hover {
     background-color: #444;
     /* Lighter gray background color on hover */
     color: #ddd;
     /* Lighter text color when hovered */
     border-radius: 5px;
     /* Optional: Add rounded corners on hover */
+}
+
+.dropbtn {
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: white
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
 /* Main Content Styling */
@@ -142,7 +182,7 @@ h2 {
 
 .post-form form {
     background-color: white;
-    padding:10px;
+    padding: 10px;
     border-radius: 5px;
 }
 
