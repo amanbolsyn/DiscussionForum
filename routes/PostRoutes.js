@@ -22,6 +22,6 @@ router.get('/new', requireAuth, PostControllers.newPosts_get);
 router.get('/popular', requireAuth, PostControllers.popularPosts_get);
 
 // Define route for each category
-router.get('/posts/category/:category', PostControllers.categoryPosts_get);
+router.get('/posts/category/:category', requireAuth ,PostControllers.categoryPosts_get);
 
 module.exports = router;

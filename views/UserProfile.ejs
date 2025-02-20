@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--Head Section-->
+<%- include("./partials/head.ejs") %>
+
+    <body>
+
+        <!-- Header Section -->
+        <%- include("./partials/header.ejs") %>
+
+            <!-- Main Content -->
+            <main>
+                <div class="container">
+
+                    <!-- Create Post Form -->
+                    <%- include('partials/createPostForm.ejs') %>
+                        <h2>Profile</h2>
+                        <h3>Nickname: <%= nickname %>
+                        </h3>
+
+                        <section class="post-list">
+                            <h2>
+                                <%= posts.authorNickname %>
+                            </h2>
+                            <div id="postsContainer">
+                                <% if (posts.length> 0) { %>
+                                    <% posts.forEach(posts=> { %>
+                                        <a style="text-decoration:none;" href="/post/<%= posts._id %>">
+                                            <h3>
+                                                <%= posts.title %>
+                                            </h3>
+                                        </a>
+                                        <p>
+                                            <%= posts.body %>
+                                        </p>
+                                        <p>
+                                            <a>Categories</a>
+                                            <%= posts.categories %><br>
+                                                <a>Likes</a>
+                                                <%= posts.likes%><br>
+                                                    <a href="/profile/<%=posts.author %>">
+                                                        <%= nickname %>
+                                                    </a>
+                                        </p>
+                                        <!-- <button id="edit" data-id=<%=posts._id %> >Edit</button>
+                                        <button id="delete" data-id=<%=posts._id %> >Delete</button> -->
+                                        <hr>
+
+                                        <% }) %>
+                                            <% } else { %>
+                                                <p>There are no blogs to display...</p>
+                                                <% } %>
+                            </div>
+                        </section>
+                </div>
+            </main>
+
+            <!-- Footer Section -->
+            <%- include("./partials/footer.ejs") %>
+    </body>
+
+</html>
