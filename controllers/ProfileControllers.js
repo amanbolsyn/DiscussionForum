@@ -146,7 +146,7 @@ module.exports.profile_getStatistics = (req, res) => {
     ])
         .then(result => {
 
-            console.log(result)
+            //console.log(result)
             // Check if result is not empty
             if (result.length > 0) {
                 const totalLikes = result[0].totalLikes;
