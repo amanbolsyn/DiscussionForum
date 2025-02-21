@@ -33,8 +33,6 @@ Make sure you have the following installed:
 1. Clone the repository:
    ```bash
    ```git clone https://github.com/yourusername/DiscussionForum.git
-
-   ```bash
    ```cd DiscussionForum
 
 2. Install dependencies:
