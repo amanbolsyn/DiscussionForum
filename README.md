@@ -26,23 +26,23 @@ Welcome to the DiscussionForum project! This is an online platform where users c
 Make sure you have the following installed:
 
 - [Node.js](https://nodejs.org/)
-- [MongoDB](https://www.mongodb.com/) (or any other preferred database)
+- [MongoDB](https://www.mongodb.com/) 
 
 ### Setting Up the Backend
 
 1. Clone the repository:
-   ```bash```
-   ```git clone https://github.com/yourusername/DiscussionForum.git```
-   ```cd DiscussionForum```
+   ```bash
+   ```git clone https://github.com/yourusername/DiscussionForum.git
+   ```cd DiscussionForum
 
 2. Install dependencies:
-   ```npm install```
+   ```npm install
 
 3. Set up the .env file with your database credentials and secret keys:
-   ```touch .env```
+   ```touch .env
 
 4. Run the server
-   ```node server```
+   ```node server
 
 Author: Nurgozhiyev Aman
 
