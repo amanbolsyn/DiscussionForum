@@ -1,24 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-    <!--Head Section-->
-    <%- include("./partials/head.ejs") %>
-<body>
+<!--Head Section-->
+<%- include("./partials/head.ejs") %>
 
-    <!-- Header Section -->
-    <%- include("./partials/header.ejs") %>
+    <body>
 
-    <!-- Main Content -->
-    <main>
-        <div class="container">
+        <!-- Header Section -->
+        <%- include("./partials/header.ejs") %>
 
-            <!-- Create Post Form -->
-            <%- include('partials/createPostForm.ejs') %>
+            <!-- Main Content -->
+            <main>
+                <div class="container">
 
-                <h2>Statistics</h2>
-             </div>
-    </main>
+                    <!-- Create Post Form -->
+                    <%- include('partials/createPostForm.ejs') %>
 
-    <!-- Footer Section -->
-    <%- include("./partials/footer.ejs") %>
-</body>
+                        <h2>Statistics</h2>
+                        <hr>
+                        <h3>Total amount of likes: <%= totalLikes%>
+                        </h3>
+                        <h3>Total amount of posts: <%= totalPosts %>
+                        </h3>
+                        <h3>Total amount of comments: <%= totalComments %>
+                        </h3>
+                        <hr>
+                        <h3>Most Recent Post</h3>
+                        <h4>
+                            <%= mostRecentPost.title %>
+                        </h4>
+                        <p>
+                            <%= mostRecentPost.body %>
+                        </p>
+                        <p>
+                            Likes: <%= mostRecentPost.likes %>
+                        </p>
+                        <p>
+                            Date: <%= mostRecentPost.date %>
+                        </p>
+                        <hr>
+                        <h3>Oldes Post</h3>
+                        <h4>
+                            <%= oldestPost.title %>
+                        </h4>
+                        <p>
+                            <%= oldestPost.body %>
+                        </p>
+                        <p>
+                            Likes: <%= oldestPost.likes %>
+                        </p>
+                        <p>
+                            Date: <%= oldestPost.date %>
+                        </p>
+                        <hr>
+                        <h3>Most liked Post</h3>
+                        <h4>
+                            <%= mostLikedPost.title %>
+                        </h4>
+                        <p>
+                            <%= mostLikedPost.body %>
+                        </p>
+                        <p>
+                            Likes: <%= mostLikedPost.likes %>
+                        </p>
+                        <p>
+                            Date: <%= mostLikedPost.date %>
+                        </p>
+                        <hr>
+                        <h3>Least liked Post</h3>
+                        <h4>
+                            <%= leastLikedPost.title %>
+                        </h4>
+                        <p>
+                            <%= leastLikedPost.body %>
+                        </p>
+                        <p>
+                            Likes: <%= leastLikedPost.likes %>
+                        </p>
+                        <p>
+                            Date: <%= leastLikedPost.date %>
+                        </p>
+
+                </div>
+            </main>
+
+            <!-- Footer Section -->
+            <%- include("./partials/footer.ejs") %>
+    </body>
+
+    <script>
+
+
+    </script>
+
 </html>
