@@ -32,20 +32,20 @@ Make sure you have the following installed:
 
 1. Clone the repository:
    ```bash
-   ```git clone https://github.com/yourusername/DiscussionForum.git
-   ```cd DiscussionForum
+   git clone https://github.com/yourusername/DiscussionForum.git
+   cd DiscussionForum
 
 2. Install dependencies:
    ```bash
-   ```npm install
+   npm install
 
 3. Set up the .env file with your database credentials and secret keys:
    ```bash
-   ```touch .env
+   touch .env
 
 4. Run the server
    ```bash
-   ```node server
+   node server
 
 Author: Nurgozhiyev Aman
 
