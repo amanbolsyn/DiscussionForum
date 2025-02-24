@@ -1,7 +1,7 @@
 <!-- Modal for Creating Post -->
-<div id="postForm" class="post-form">
+<div id="createPostForm" class="post-form">
     <div class="modal-content">
-        <span class="close" id="closeModal">&times;</span>
+        <span class="close" id="closeCreateModal">&times;</span>
         <form id="newPostForm" action="/posts" method="POST">
             <h2>Post New Topic</h2>
             <input type="text" id="postTitle" placeholder="Enter title" required name="title"><br><br>
@@ -26,24 +26,24 @@
 </div>
 
 <script>
-    var modal = document.getElementById("postForm");
-    var btn = document.getElementById("createPost");
-    var span = document.getElementById("closeModal");
+    var createForm = document.getElementById("createPostForm");
+    var createPostBttn = document.getElementById("createPost");
+    var createCloseSpan = document.getElementById("closeCreateModal");
 
     // When the user clicks the button, open the modal
-    btn.onclick = function () {
-        modal.style.display = "block";
+    createPostBttn.onclick = function () {
+        createForm.style.display = "block";
     }
 
     // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        modal.style.display = "none";
+    createCloseSpan.onclick = function () {
+        createForm.style.display = "none";
     }
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function (event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        if (event.target == createForm) {
+            createForm.style.display = "none";
         }
     }
 

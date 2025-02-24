@@ -10,23 +10,26 @@
 
             <!-- Main Content -->
             <main>
-                <div class="container">
-                    <section class="post-list">
-                        <div id="postsContainer">
-                            <h2>
-                                <%= post.title%>
-                            </h2>
-                            <p>
-                                <%= post.body%>
-                            </p>
-                            <a href="/profile/<%= user_id %>">
-                                <%= author %>
-                            </a><br><br>
-                            <button>Edit</button>
-                            <button id="delete" data-doc=<%=post._id%>>Delete</button>
+                <%- include('partials/createPostForm.ejs') %>
+                        <div class="container">
+                            <section class="post-list">
+                                <div id="postsContainer">
+                                    <h2>
+                                        <%= post.title%>
+                                    </h2>
+                                    <p>
+                                        <%= post.body%>
+                                    </p>
+                                    <a href="/profile/<%= user_id %>">
+                                        <%= author %>
+                                    </a><br><br>
+                                    <button id="editPost" data-doc=<%= post._id %>>Edit</button>
+                                    <button id="delete" data-doc=<%=post._id %>>Delete</button>
+                                </div>
+                            </section>
                         </div>
-                    </section>
-                </div>
+
+                        <%- include('partials/editPostForm.ejs') %>
             </main>
 
             <!-- Footer Section -->

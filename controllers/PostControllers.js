@@ -166,7 +166,7 @@ module.exports.post_delete = (req, res) => {
                         Post.deleteOne({ _id: new ObjectId(postId) })
                             .then((result) => {
                                 console.log('deleted')
-                                res.status(200).json({ redirect: '/posts' })
+                                res.status(200).json({ redirect: '/profile' })
                             })
                             .catch((err) => {
                                 console.log(err);
@@ -183,6 +183,42 @@ module.exports.post_delete = (req, res) => {
             console.log(err)
         })
 };
+
+
+module.exports.post_edit = (req, res) => {
+    const id = req.params.id;
+    const refreshToken = req.cookies['refresh-token'];
+
+    
+    Post.findById(id)
+
+        .then(async (post) => {
+
+          User.findById(post.author)
+           .then((user) => {
+               
+            if(user.refreshToken === refreshToken){
+                res.json({
+                    title: post.title,
+                    body: post.body,
+                    categories: post.categories,
+                    isvalidUser: true,
+                  });
+            } else {
+                res.json({
+                    isValidUser: false,
+                });
+            }
+           }) 
+            .catch((err) => {
+                console.log(err)
+            })
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+}
+
 
 //renders new posts page
 module.exports.newPosts_get = async (req, res) => {
@@ -209,8 +245,6 @@ module.exports.newPosts_get = async (req, res) => {
                 };
             });
 
-
-            //console.log(posts);
             // Render the 'newPosts' page with the posts and title
             res.status(200).render('newPosts', { posts: postsWithNicknames, title: 'Recent posts' })
         })

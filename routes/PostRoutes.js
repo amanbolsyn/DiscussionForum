@@ -17,6 +17,8 @@ router.get('/post/:id', PostControllers.post_get);
 router.delete('/posts/:id', PostControllers.posts_delete);
 router.delete('/post/:id', PostControllers.post_delete);
 
+router.get('/post/:id/edit', PostControllers.post_edit)
+
 
 router.get('/new', requireAuth, PostControllers.newPosts_get);
 router.get('/popular', requireAuth, PostControllers.popularPosts_get);
