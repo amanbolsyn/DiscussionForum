@@ -189,34 +189,44 @@ module.exports.post_edit = (req, res) => {
     const id = req.params.id;
     const refreshToken = req.cookies['refresh-token'];
 
-    
+
     Post.findById(id)
 
         .then(async (post) => {
 
-          User.findById(post.author)
-           .then((user) => {
-               
-            if(user.refreshToken === refreshToken){
-                res.json({
-                    title: post.title,
-                    body: post.body,
-                    categories: post.categories,
-                    isvalidUser: true,
-                  });
-            } else {
-                res.json({
-                    isValidUser: false,
-                });
-            }
-           }) 
-            .catch((err) => {
-                console.log(err)
-            })
+            User.findById(post.author)
+                .then((user) => {
+
+                    if (user.refreshToken === refreshToken) {
+                        res.json({
+                            title: post.title,
+                            body: post.body,
+                            categories: post.categories,
+                        });
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
         })
         .catch((err) => {
             console.log(err);
         })
+}
+
+module.exports.post_put = (req, res) => {
+
+    const postId = req.params.id;
+    const { title, body, categories } = req.body;
+
+    Post.findByIdAndUpdate(postId, { title, body, categories }, { new: true })
+        .then(updatedPost => {
+            res.json({ message: 'Post updated successfully', updatedPost });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ message: 'Server error' });
+        });
 }
 
 

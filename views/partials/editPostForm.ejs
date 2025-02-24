@@ -1,4 +1,4 @@
-<!-- Modal for Creating Post -->
+<!-- Modal for Editin existing Posts -->
 <div id="editPostForm" class="post-form">
   <div class="modal-content">
     <span class="close" id="closeEditModal">&times;</span>
@@ -23,64 +23,6 @@
       <button type="submit">Save Changes</button>
     </form><br><br>
   </div>
-</div>
 
-<script>
-  var editForm = document.getElementById("editPostForm");
-  var editPostBttn = document.getElementById("editPost");
-  var editCloseSpan = document.getElementById("closeEditModal");
-
-  // When the user clicks the button, open the modal
-  editPostBttn.addEventListener('click', (e) => {
-    editForm.style.display = "block";
-
-    // Fetch post data and fill the form
-    const editEndPoint = `/post/${editPostBttn.dataset.doc}/edit`;
-
-    console.log(editEndPoint)
-
-    // Fetch the post details from the server
-    fetch(editEndPoint, {
-      method: 'GET',
-    })
-      .then(response => response.json())
-      .then(post => {
-        // Fill in the form fields with the post data
-
-       if(post.isValidUser) {
-        document.getElementById('editPostTitle').value = post.title;
-        document.getElementById('editPostContent').value = post.body;
-
-        // Set the selected category
-        document.getElementById('editCategorySelect').value = post.categories;
-       } else {
-        editForm.style.display = "none";
-       }
-      })
-      .catch(error => {
-        console.error("Error fetching post data:", error);
-      });
-  })
-
-  // When the user clicks on <span> (x), close the modal
-  editCloseSpan.onclick = function () {
-    editForm.style.display = "none";
-  }
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function (event) {
-    if (event.target == editForm) {
-      editForm.style.display = "none";
-    }
-  }
-
-  // Validate that at least one category is selected
-  function validateForm() {
-    var selectedCategories = document.querySelectorAll('#categorySelect option:checked');
-    if (selectedCategories.length == 0) {
-      alert("Please select at least one category.");
-      return false; // Prevent form submission
-    }
-    return true; // Allow form submission
-  }
-</script>
+<!-- Post Editing Logic -->
+<script src = "/EditPostHandler.js"></script>

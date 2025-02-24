@@ -11,13 +11,15 @@ router.get('/posts', requireAuth, checkRefreshToken, PostControllers.posts_get);
 router.post('/posts', requireAuth, checkRefreshToken, PostControllers.post_post);
 
 
-router.get('/post/:id', PostControllers.post_get);
+router.get('/post/:id', requireAuth, PostControllers.post_get);
 
 //delete post routes
-router.delete('/posts/:id', PostControllers.posts_delete);
-router.delete('/post/:id', PostControllers.post_delete);
+router.delete('/posts/:id', requireAuth, PostControllers.posts_delete);
+router.delete('/post/:id',requireAuth,  PostControllers.post_delete);
 
-router.get('/post/:id/edit', PostControllers.post_edit)
+//edit post routes
+router.get('/post/:id/edit', requireAuth, PostControllers.post_edit)
+router.put('/post/:id', requireAuth, PostControllers.post_put);
 
 
 router.get('/new', requireAuth, PostControllers.newPosts_get);
