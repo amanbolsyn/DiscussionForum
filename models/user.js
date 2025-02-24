@@ -20,7 +20,7 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: [true, 'Please enter a password'], //custome error messages for each case
-    minlength: [7, 'Minimum password length is 7']
+    minlength: [8, 'Minimum password length is 8']
   },
   refreshToken: {
     type: String,  // Storing refresh token for single device login

@@ -66,14 +66,16 @@
 
                 const data = await res.json();
 
+
                 if (data.errors) {
 
                     nicknameErorr.textContent = data.errors.nickname;
                     emailErorr.textContent = data.errors.email;
                     passwordErorr.textContent = data.errors.password;
+
                 }
 
-                if(data.user) {
+                if (data.user) {
                     location.assign('/');
                 }
             }

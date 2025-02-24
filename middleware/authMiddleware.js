@@ -2,54 +2,54 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const requireAuth = (req, res, next) => {
-    const token = req.cookies.jwt;
+  const token = req.cookies.jwt;
 
-    // check json web token exists & is verified
-    if (token) {
-        jwt.verify(token,  process.env.KEY , (err, decodedToken) => {
-            if (err) {
-                //console.log(err.message);
-                res.redirect('/login');
-            } else {
-                //console.log(decodedToken);
-                next();
-            }
-        });
-    } else {
+  // check json web token exists & is verified
+  if (token) {
+    jwt.verify(token, process.env.KEY, (err, decodedToken) => {
+      if (err) {
+        //console.log(err.message);
         res.redirect('/login');
-    }
+      } else {
+        //console.log(decodedToken);
+        next();
+      }
+    });
+  } else {
+    res.redirect('/login');
+  }
 };
 
 
 // check current user
 const checkUser = (req, res, next) => {
-    const token = req.cookies.jwt;
-    if (token) {
-      jwt.verify(token,  process.env.KEY , async (err, decodedToken) => {
-        if (err) {
-          res.locals.user = null;
-          next();
-        } else {
-          let user = await User.findById(decodedToken.id);
-          res.locals.user = user;
-          next();
-        }
-      });
-    } else {
-      res.locals.user = null;
-      next();
-    }
-  };
+  const token = req.cookies.jwt;
+  if (token) {
+    jwt.verify(token, process.env.KEY, async (err, decodedToken) => {
+      if (err) {
+        res.locals.user = null;
+        next();
+      } else {
+        let user = await User.findById(decodedToken.id);
+        res.locals.user = user;
+        next();
+      }
+    });
+  } else {
+    res.locals.user = null;
+    next();
+  }
+};
 
-  // Function to check the refresh token (this will be reusable for all requests)
+// Function to check the refresh token (this will be reusable for all requests)
 const checkRefreshToken = async (req, res, next) => {
   const refreshToken = req.cookies['refresh-token']; // Accessing 'refresh-token' from cookies
-  
+
   try {
     // Decode the refresh token to get the user ID
     const decoded = jwt.verify(refreshToken, process.env.REFRESH_KEY);
     const userId = decoded.id;
- 
+
     // Find the user in the database
     const user = await User.findById(userId);
 
@@ -68,5 +68,37 @@ const checkRefreshToken = async (req, res, next) => {
 };
 
 
-  
-module.exports = { requireAuth, checkUser, checkRefreshToken};
+//checks password strenght for upper case letters, digits and special characters
+const CheckPasswordStrength = async (req, res, next) => {
+
+  const password = req.body.password
+  let errors = { nickname: '', email: '', password: '' };
+
+  const isUpperCase = /[A-Z]/;  // Regular expression to match any uppercase letter
+
+  if (!(isUpperCase.test(password))) {
+    errors.password = "Password has to have at least one uppercase letter"
+    return res.status(400).json({ errors })
+  }
+
+  const isDigit = /[0-9]/;
+
+  if (!(isDigit.test(password))) {
+    errors.password = "Password has to have at least one digit"
+    return res.status(400).json({ errors })
+  }
+
+  const isSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+
+  if (!(isSpecialChar.test(password))){
+    errors.password = "Password has to have one special character"
+    return res.status(400).json({errors})
+  }
+
+
+    next();
+
+}
+
+
+module.exports = { requireAuth, checkUser, checkRefreshToken, CheckPasswordStrength };
