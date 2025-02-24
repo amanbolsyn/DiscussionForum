@@ -52,26 +52,6 @@ app.use(ProfileRoutes);
 
 //404 page
 app.use((req, res) => {
-    res.status(404).render('404');
+    res.status(404).render('404', {title: "Error: 404"});
     logger.info('Request processed', { caller: __filename, hostname: req.hostname, method: req.method, path: req.path, status: res.statusCode});
 });
-
-
-// app.put('/posts/:id', (req, res) => {
-//     const id = req.params.id; // Get the post ID from the URL
-//     const { title, body } = req.body; // Get updated title and body from the request body
-
-//     console.log(req.body)
-
-//     // Find the post by ID and update it
-//     Post.findByIdAndUpdate(id, { title, body }, { new: true })  // `new: true` returns the updated post
-//         .then((updatedPost) => {
-//             res.json({ result: updatedPost });
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//             res.status(500).json({ message: 'Error updating post' });
-//         });
-// });
-
-
