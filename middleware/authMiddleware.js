@@ -55,7 +55,7 @@ const checkRefreshToken = async (req, res, next) => {
 
     // Check if the refresh token stored in the DB matches the one in the cookies
     if (user.refreshToken !== refreshToken) {
-    // Tokens don't match, log out the user
+      // Tokens don't match, log out the user
       res.redirect('/logout');
     }
     // Token is valid, proceed to the next middleware
@@ -68,7 +68,7 @@ const checkRefreshToken = async (req, res, next) => {
 };
 
 
-//checks password strenght for upper case letters, digits and special characters
+//checks password strenght for upper case letters, digits and special characters 
 const CheckPasswordStrength = async (req, res, next) => {
 
   const password = req.body.password
@@ -80,7 +80,7 @@ const CheckPasswordStrength = async (req, res, next) => {
     errors.password = "Password has to have at least one uppercase letter"
     return res.status(400).json({ errors })
   }
-  
+
   const isDigit = /[0-9]/;
 
   if (!(isDigit.test(password))) {
@@ -94,8 +94,11 @@ const CheckPasswordStrength = async (req, res, next) => {
     errors.password = "Password has to have one special character"
     return res.status(400).json({errors})
   }
-  
+
+
     next();
+
 }
+
 
 module.exports = { requireAuth, checkUser, checkRefreshToken, CheckPasswordStrength };
