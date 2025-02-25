@@ -11,7 +11,7 @@
             <!-- Main Content -->
             <main>
                 <div class="container">
-                    <section class="form-section">
+                    <section class="form-section" id="SignUpSection">
                         <h2>Sign Up</h2>
                         <form id="signupForm" class="signup-form" action="/signup">
                             <input type="text" id="nickname" name="nickname" placeholder="Enter nickname" required>
@@ -26,6 +26,17 @@
                         </form>
                     </section>
                 </div>
+
+                <div class="container">
+                    <section class="form-section" id="authForm" style="display: none;">
+                        <h2>Authentication code</h2>
+                        <form id="authCodeForm" class="signup-form" method = "POST" action="/verify-2fa">
+                            <input type="text" id="authCode" name="authCode" placeholder="Enter code" required>
+                            <div class="authcode error"></div><br><br>
+                            <button>Submit</button>
+                        </form>
+                    </section>
+                </div>
             </main>
 
 
@@ -37,6 +48,7 @@
 
     <script>
         const form = document.querySelector('form');
+        const signUpSection = document.getElementById('SignUpSection')
 
         const nicknameErorr = document.querySelector('.nickname.error');
         const emailErorr = document.querySelector('.email.error');
@@ -73,11 +85,14 @@
                     emailErorr.textContent = data.errors.email;
                     passwordErorr.textContent = data.errors.password;
 
-                } 
-                
-                if (data.user) {
-                    location.assign('/');
                 }
+
+                if (data.isSent) {
+                    const authForm = document.getElementById('authForm');
+                    signUpSection.style.display = "none";
+                    authForm.style.display = "block";
+                }
+
             }
             catch (err) {
                 console.log(err);
