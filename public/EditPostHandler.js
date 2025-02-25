@@ -46,9 +46,21 @@ document.getElementById("editPostForm").onsubmit = function (event) {
 
     const postId = editPostBttn.dataset.doc; // Assuming the button has a data-doc attribute with the post ID
 
+    // Clear previous error messages
+    const titleError = document.getElementById('titleEditError');
+    const bodyError = document.getElementById('bodyEditError')
+    const categoriesError = document.getElementById('categoriesEditError');
+
+    // reset errors
+    titleError.textContent = '';
+    bodyError.textContent = '';
+    categoriesError.textContent = ''
+
+
     const title = document.getElementById('editPostTitle').value;
     const body = document.getElementById('editPostContent').value;
     const categories = document.getElementById('editCategorySelect').value;
+
 
     const postData = { title, body, categories };
 
@@ -61,7 +73,16 @@ document.getElementById("editPostForm").onsubmit = function (event) {
     })
         .then(response => response.json())
         .then(data => {
-            location.assign('/post/' + data.post._id);
+
+            if (data.errors) {
+                titleError.textContent = data.errors.title;
+                bodyError.textContent = data.errors.body;
+                categoriesError.textContent = data.errors.categories;
+            }
+
+            if (data.post) {
+                location.assign('/post/' + data.post._id);
+            }
         })
         .catch(error => {
             console.error('Error updating post:', error);

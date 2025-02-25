@@ -35,9 +35,9 @@ document.getElementById("newPostForm").addEventListener('submit', async function
     event.preventDefault(); // Prevent default form submission
 
     // Clear previous error messages
-    const titleError = document.querySelector('.title.error');
-    const bodyError = document.querySelector('.body.error')
-    const categoriesError = document.querySelector('.categories.error');
+    const titleError = document.getElementById('titleCreateError');
+    const bodyError = document.getElementById('bodyCreateError')
+    const categoriesError = document.getElementById('categoriesCreateError');
 
     // reset errors
     titleError.textContent = '';

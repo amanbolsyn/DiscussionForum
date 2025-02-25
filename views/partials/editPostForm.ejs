@@ -4,10 +4,12 @@
     <span class="close" id="closeEditModal">&times;</span>
     <form id="editPostForm" action="/posts" method="PUT">
       <h2>Edit post</h2>
-      <input type="text" id="editPostTitle" placeholder="Enter title" required name="title"><br><br>
-      <textarea id="editPostContent" placeholder="Enter content" required name="body"></textarea><br><br>
+      <input type="text" id="editPostTitle" placeholder="Enter title" name="title">
+      <div class="error" id = "titleEditError"></div><br>
+      <textarea id="editPostContent" placeholder="Enter content" name="body"></textarea>
+      <div class="error" id = "bodyEditError"></div><br>
       <h3>Select Category</h3>
-      <select id="editCategorySelect" required name="categories">
+      <select id="editCategorySelect" name="categories">
         <option value="">--Select a Category--</option>
         <option value="Technology">Technology</option>
         <option value="Science">Science</option>
@@ -19,7 +21,8 @@
         <option value="Politics">Politics</option>
         <option value="Art">Art</option>
         <option value="Travel">Travel</option>
-      </select><br><br>
+      </select>
+      <div class="error" id = "categoriesEditError"></div><br>
       <button type="submit">Save Changes</button>
     </form><br><br>
   </div>

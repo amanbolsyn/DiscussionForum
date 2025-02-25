@@ -4,10 +4,10 @@
         <span class="close" id="closeCreateModal">&times;</span>
         <form id="newPostForm" action="/posts" method="POST">
             <h2>Post New Topic</h2>
-            <input type="text" id="postTitle" placeholder="Enter title"  name="title">
-            <div class="title error"></div><br>
+            <input type="text" id="postTitle" placeholder="Enter title" name="title">
+            <div class="error" id ="titleCreateError"></div><br>
             <textarea id="postContent" placeholder="Enter content" name="body"></textarea>
-            <div class="body error"></div><br>
+            <div class="error" id = "bodyCreateError"></div><br>
             <h3>Select Category</h3>
             <select id="categorySelect" name="categories">
                 <option value="">--Select a Category--</option>
@@ -22,7 +22,7 @@
                 <option value="Art">Art</option>
                 <option value="Travel">Travel</option>
             </select>
-            <div class="categories error"></div><br><br>
+            <div class="error" id = "categoriesCreateError"></div><br><br>
             <button type="submit">Create Post</button>
         </form><br><br>
     </div>

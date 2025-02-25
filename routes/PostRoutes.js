@@ -20,7 +20,7 @@ router.delete('/post/:id',requireAuth,  PostControllers.post_delete);
 
 //edit post routes
 router.get('/post/:id/edit', requireAuth, PostControllers.post_edit)
-router.put('/post/:id', requireAuth, PostControllers.post_put);
+router.put('/post/:id', requireAuth,CheckPost, PostControllers.post_put);
 
 
 router.get('/new', requireAuth, PostControllers.newPosts_get);
