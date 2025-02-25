@@ -126,7 +126,7 @@ module.exports.post_post = async (req, res) => {
 
     post.save()
         .then((result) => {
-            res.status(200).redirect('/posts');
+            res.status(200).json({post:result});
         })
         .catch((err) => {
             console.log('Error saving post:', err);
@@ -221,7 +221,7 @@ module.exports.post_put = (req, res) => {
 
     Post.findByIdAndUpdate(postId, { title, body, categories }, { new: true })
         .then(updatedPost => {
-            res.json({ message: 'Post updated successfully', updatedPost });
+            res.json({ post: updatedPost });
         })
         .catch(err => {
             console.error(err);

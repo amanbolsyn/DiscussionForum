@@ -182,7 +182,7 @@ h2 {
 
 .post-form form {
     background-color: white;
-    padding: 10px;
+    padding: 15px;
     border-radius: 5px;
 }
 
@@ -190,10 +190,19 @@ h2 {
 .post-form textarea {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     border-radius: 5px;
     border: 1px solid #ddd;
     font-size: 16px;
+}
+
+.post-form textarea {
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.post-form select {
+    margin-bottom: 5px;
 }
 
 /* General Styling for the Button */
@@ -358,7 +367,6 @@ h2 {
 
 .error {
     color: #ff0099;
-    margin: 10px 2px;
     font-size: 0.8em;
     font-weight: bold;
 }

@@ -1,6 +1,7 @@
 const { Router } = require('express')
 const PostControllers = require('../controllers/PostControllers.js');
 const { requireAuth, checkUser, checkRefreshToken } = require('../middleware/authMiddleware.js');
+const { CheckPost } = require('../middleware/postMiddleware.js')
 
 const router = Router();
 
@@ -8,7 +9,7 @@ const router = Router();
 router.get('*', checkUser);
 router.get('/', requireAuth, checkRefreshToken, PostControllers.redirect_home);
 router.get('/posts', requireAuth, checkRefreshToken, PostControllers.posts_get);
-router.post('/posts', requireAuth, checkRefreshToken, PostControllers.post_post);
+router.post('/posts', requireAuth, checkRefreshToken, CheckPost, PostControllers.post_post);
 
 
 router.get('/post/:id', requireAuth, PostControllers.post_get);

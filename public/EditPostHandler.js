@@ -61,9 +61,7 @@ document.getElementById("editPostForm").onsubmit = function (event) {
     })
         .then(response => response.json())
         .then(data => {
-            alert('Post updated successfully')
-            // Optionally close the modal and show a success message
-            editForm.style.display = "none";
+            location.assign('/post/' + data.post._id);
         })
         .catch(error => {
             console.error('Error updating post:', error);

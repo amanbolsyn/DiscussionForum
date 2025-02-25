@@ -28,3 +28,51 @@ function validateForm() {
     }
     return true; // Allow form submission
 }
+
+
+// Handle the form submission with fetch
+document.getElementById("newPostForm").addEventListener('submit', async function (event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Clear previous error messages
+    const titleError = document.querySelector('.title.error');
+    const bodyError = document.querySelector('.body.error')
+    const categoriesError = document.querySelector('.categories.error');
+
+    // reset errors
+    titleError.textContent = '';
+    bodyError.textContent = '';
+    categoriesError.textContent = ''
+
+
+    title = document.getElementById('postTitle').value
+    body = document.getElementById('postContent').value
+    categories = document.getElementById('categorySelect').value
+
+    try {
+        // Send the data to the server via POST request
+        const response = await fetch('/posts', {
+            method: 'POST',
+            body: JSON.stringify({ title, body, categories }),
+            headers: { 'Content-Type': 'application/json' }
+        });
+
+        const data = await response.json(); // Assuming the server returns JSON
+
+        if (data.errors) {
+            titleError.textContent = data.errors.title;
+            bodyError.textContent = data.errors.body;
+            categoriesError.textContent = data.errors.categories;
+        }
+
+        if (data.post) {
+            location.assign('/post/' + data.post._id);
+        }
+
+
+
+    } catch (error) {
+        console.error("Error:", error);
+    }
+
+});

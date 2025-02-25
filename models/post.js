@@ -4,12 +4,13 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true, // Title is required
-    maxlength: 200,  // Limit the length of the title if needed
+    required: true,
+    maxlength: [100, "Maximum post length 100 length"],  // Limit the length of the title if needed
   },
   body: {
     type: String,
-    required: true, // Body/content of the post is required
+    required: true,
+    maxlength: [300, "Maximum post length 300 characters"] // Body/content of the post is required
   },
   date: {
     type: Date,
